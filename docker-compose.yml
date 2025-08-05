@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   cuda-parallel-tutorial:
     container_name: cuda-parallel-tutorial
