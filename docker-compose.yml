@@ -35,7 +35,6 @@ services:
         pip3 install scikit-learn seaborn plotly tqdm rich ipywidgets &&
         pip3 install pytest black flake8 &&
         mkdir -p /workspace/{tutorials,notebooks,examples,data,scripts} &&
-        cat > /workspace/notebooks/00_getting_started.ipynb << 'EOF'
     deploy:
       resources:
         reservations:
