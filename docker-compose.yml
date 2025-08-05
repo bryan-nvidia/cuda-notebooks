@@ -1,24 +1,19 @@
 services:
-  cuda-parallel-tutorial:
-    container_name: cuda-parallel-tutorial
+  jupyterlab:
+    container_name: jupyter-cuda
     user: root
     image: nvidia/cuda:12.6.2-devel-ubuntu22.04
     restart: always
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
-      - JUPYTER_TOKEN=
-      - NB_USER=tutorial
+      - JUPYTER_TOKEN=token
+      - NB_USER=jupyternb
       - NB_UID=1000
       - NB_GID=100
-      - PYTHONPATH=/workspace
-      - CUDA_VISIBLE_DEVICES=0
+      - CHOWN_HOME=yes
     volumes:
-      - ./tutorials:/workspace/tutorials
-      - ./notebooks:/workspace/notebooks
-      - ./examples:/workspace/examples
-      - ./data:/workspace/data
-      - cuda_cache:/root/.cache
-    working_dir: /workspace
+      - ../cuda-notebooks:/home/jupyternb
+    working_dir: /home/jupyternb
     ports:
       - '8888:8888'
     command: [
