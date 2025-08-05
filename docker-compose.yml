@@ -23,11 +23,10 @@ services:
         pip3 install --upgrade pip &&
         pip3 install jupyterlab numpy numba matplotlib cupy-cuda12x nvmath-python numba_cuda pandas pynvml &&
         pip3 install cuda-python &&
-        pip3 install --extra-index-url=https://pypi.nvidia.com cuda-cccl-cu12 &&
         pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124 &&
         pip3 install cudf-cu12 cuml-cu12 dask-cuda dask-cudf-cu12 dask aiohttp requests nvidia-libmathdx-cu12 --extra-index-url=https://pypi.nvidia.com &&
         ln -s /usr/local/cuda*/nvvm/lib64/libnvvm.so /usr/lib/libnvvm.so || true &&
-        jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token=''"
+        jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token=token --NotebookApp.allow_origin='*'"
     deploy:
       resources:
         reservations:
