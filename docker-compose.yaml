@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  cuda-parallel-tutorial:
+    container_name: cuda-parallel-tutorial
+    user: root
+    image: nvidia/cuda:12.6.2-devel-ubuntu22.04
+    restart: always
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - JUPYTER_TOKEN=
+      - NB_USER=tutorial
+      - NB_UID=1000
+      - NB_GID=100
+      - PYTHONPATH=/workspace
+      - CUDA_VISIBLE_DEVICES=0
+    volumes:
+      - ./tutorials:/workspace/tutorials
+      - ./notebooks:/workspace/notebooks
+      - ./examples:/workspace/examples
+      - ./data:/workspace/data
+      - cuda_cache:/root/.cache
+    working_dir: /workspace
+    ports:
+      - '8888:8888'
+    command: >
+      bash -c "
+        apt-get update &&
+        apt-get install -y python3 python3-pip git wget curl vim htop tree &&
+        pip3 install --upgrade pip setuptools wheel &&
+        pip3 install jupyterlab numpy scipy matplotlib pandas &&
+        pip3 install cupy-cuda12x pynvml &&
+        pip3 install cuda-python &&
+        pip3 install --extra-index-url=https://pypi.nvidia.com cuda-cccl-cu12 &&
+        pip3 install scikit-learn seaborn plotly tqdm rich ipywidgets &&
+        pip3 install pytest black flake8 &&
+        mkdir -p /workspace/{tutorials,notebooks,examples,data,scripts} &&
+        cat > /workspace/notebooks/00_getting_started.ipynb << 'EOF'
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
