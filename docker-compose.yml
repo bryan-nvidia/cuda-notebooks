@@ -1,6 +1,6 @@
 services:
   jupyterlab:
-    container_name: cuda-libaries
+    container_name: cuda-libs
     user: root
     image: nvidia/cuda:12.6.2-devel-ubuntu22.04
     restart: always
